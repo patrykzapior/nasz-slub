@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anna &amp; Jakub — Zaproszenie</title>
+<meta name="description" content="Zapraszamy na nasz ślub">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+     ██  KONFIGURACJA WIZUALNA — kolory i typografia
+     Wszystkie treści (imiona, daty, adresy) edytujesz w CONFIG
+     na dole pliku, w znaczniku <script>. Nie musisz ruszać CSS.
+     ========================================================= */
+  :root{
+    --ivory:   #FAF6EF;
+    --ivory-2: #F2ECE0;
+    --ink:     #2E2A24;
+    --ink-soft:#5B564C;
+    --sage:    #64715A;
+    --sage-dk: #454E3E;
+    --rose:    #C68C86;
+    --gold:    #A9834D;
+    --line:    rgba(46,42,36,0.14);
+    --shadow:  0 10px 40px rgba(46,42,36,0.10);
+    --radius:  2px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+    color:var(--ink);
+  }
+
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  :focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:4px;
+  }
+
+  .eyebrow{
+    font-family:'Jost', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--sage-dk);
+    font-weight:500;
+  }
+
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- Envelope intro overlay ---------- */
+  #envelope{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    background:var(--sage-dk);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:opacity 1s ease 0.15s, visibility 1s ease 0.15s;
+  }
+  #envelope::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(135deg, transparent 49.6%, rgba(255,255,255,0.06) 50%, transparent 50.4%),
+      linear-gradient(-135deg, transparent 49.6%, rgba(255,255,255,0.06) 50%, transparent 50.4%);
+  }
+  #envelope .seal{
+    position:relative;
+    width:104px; height:104px;
+    border-radius:50%;
+    background:var(--rose);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 30px rgba(0,0,0,0.25);
+    transform:scale(1);
+    transition:transform 0.7s cubic-bezier(.6,.05,.2,1), opacity 0.6s ease;
+  }
+  #envelope .seal svg{width:52px; height:52px;}
+  #envelope.opened{opacity:0; visibility:hidden;}
+  #envelope.opened .seal{transform:scale(0.4); opacity:0;}
+  #envelope .hint{
+    position:absolute;
+    bottom:48px;
+    color:var(--ivory);
+    font-family:'Jost',sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    opacity:0.75;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #envelope{transition:none;}
+    #envelope .seal{transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- Divider (signature line-art) ---------- */
+  .divider{
+    display:flex;
+    justify-content:center;
+    margin:0 auto;
+    width:140px;
+    opacity:0.8;
+  }
+  .divider svg{width:100%; height:auto; stroke:var(--gold); fill:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:100px 28px 60px;
+    position:relative;
+  }
+  .hero .monogram{width:120px; height:120px; margin-bottom:28px; color:var(--sage);}
+  .hero .monogram svg{width:100%; height:100%; stroke:currentColor; fill:none; stroke-width:1.1;}
+  .hero .eyebrow{margin-bottom:18px;}
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 5rem);
+    font-style:italic;
+    font-weight:500;
+    line-height:1.05;
+  }
+  .hero h1 .amp{
+    display:inline-block;
+    color:var(--rose);
+    font-size:0.7em;
+    padding:0 0.12em;
+    font-style:normal;
+  }
+  .hero .tagline{
+    margin-top:22px;
+    font-size:1.02rem;
+    color:var(--ink-soft);
+    max-width:34ch;
+  }
+  .hero .datebar{
+    margin-top:38px;
+    font-family:'Jost',sans-serif;
+    letter-spacing:0.06em;
+    font-size:1rem;
+    color:var(--ink);
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .hero .datebar .dot{width:5px; height:5px; border-radius:50%; background:var(--gold);}
+  .hero .scroll-cue{
+    position:absolute;
+    bottom:36px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    color:var(--ink-soft);
+    font-size:0.68rem;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+  }
+  .hero .scroll-cue .stem{
+    width:1px; height:38px;
+    background:linear-gradient(var(--ink-soft), transparent);
+    animation:stem 2.4s ease-in-out infinite;
+  }
+  @keyframes stem{
+    0%,100%{transform:scaleY(1); opacity:0.5;}
+    50%{transform:scaleY(0.6); opacity:1;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero .scroll-cue .stem{animation:none;}
+  }
+
+  /* ---------- Section shell ---------- */
+  section{padding:110px 0;}
+  .section-head{text-align:center; margin-bottom:64px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-size:clamp(1.9rem, 4vw, 2.6rem); font-style:italic;}
+
+  /* ---------- Countdown ---------- */
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap:clamp(18px, 4vw, 46px);
+    flex-wrap:wrap;
+    margin:0 auto 8px;
+  }
+  .countdown .unit{text-align:center; min-width:64px;}
+  .countdown .num{
+    font-family:'Fraunces', serif;
+    font-size:clamp(2.1rem, 5vw, 3.1rem);
+    font-weight:500;
+    color:var(--sage-dk);
+    font-variant-numeric:tabular-nums;
+  }
+  .countdown .lbl{
+    font-size:0.66rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-top:6px;
+  }
+
+  /* ---------- Details cards ---------- */
+  .details-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+    margin-top:60px;
+  }
+  @media (max-width:680px){ .details-grid{grid-template-columns:1fr;} }
+  .card{
+    background:var(--ivory-2);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:40px 34px;
+    text-align:center;
+  }
+  .card .icon{width:34px; height:34px; margin:0 auto 20px; color:var(--rose);}
+  .card .icon svg{width:100%; height:100%; stroke:currentColor; fill:none; stroke-width:1.2;}
+  .card h3{font-style:italic; font-size:1.4rem; margin-bottom:14px;}
+  .card p{color:var(--ink-soft); font-size:0.95rem;}
+  .card .time{
+    display:inline-block;
+    margin-top:18px;
+    font-family:'Jost',sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--sage-dk);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  .card .map-link{
+    display:inline-block;
+    margin-top:16px;
+    font-size:0.82rem;
+    color:var(--gold);
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+    padding-bottom:1px;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline{
+    max-width:520px;
+    margin:0 auto;
+    position:relative;
+    padding-left:34px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px; top:6px; bottom:6px;
+    width:1px;
+    background:var(--line);
+  }
+  .t-item{position:relative; padding-bottom:36px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:"";
+    position:absolute;
+    left:-34px; top:4px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--ivory);
+    border:1.5px solid var(--gold);
+  }
+  .t-item .t-time{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:1.1rem;
+    color:var(--sage-dk);
+  }
+  .t-item .t-label{color:var(--ink-soft); font-size:0.94rem; margin-top:2px;}
+
+  /* ---------- RSVP ---------- */
+  .rsvp-box{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+    background:var(--ivory-2);
+    border:1px solid var(--line);
+    padding:56px 40px;
+    border-radius:var(--radius);
+  }
+  .rsvp-box p{color:var(--ink-soft); margin-bottom:30px;}
+  .btn{
+    display:inline-block;
+    background:var(--sage-dk);
+    color:var(--ivory);
+    text-decoration:none;
+    font-family:'Jost',sans-serif;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:0.78rem;
+    padding:17px 40px;
+    border-radius:var(--radius);
+    transition:background 0.25s ease, transform 0.25s ease;
+  }
+  .btn:hover{background:var(--sage); transform:translateY(-2px);}
+  .rsvp-deadline{
+    margin-top:22px;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--rose);
+  }
+
+  /* ---------- Info list ---------- */
+  .info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    max-width:680px;
+    margin:0 auto;
+  }
+  @media (max-width:680px){ .info-grid{grid-template-columns:1fr;} }
+  .info-item .eyebrow{margin-bottom:10px;}
+  .info-item p{color:var(--ink-soft); font-size:0.95rem;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center;
+    padding:90px 28px 60px;
+  }
+  footer .monogram-sm{width:64px; height:64px; margin:0 auto 22px; color:var(--sage);}
+  footer .monogram-sm svg{width:100%; height:100%; stroke:currentColor; fill:none; stroke-width:1.1;}
+  footer h3{font-style:italic; font-size:1.6rem; margin-bottom:8px;}
+  footer .sig{color:var(--ink-soft); font-size:0.88rem;}
+
+  ::selection{background:var(--rose); color:var(--ivory);}
+</style>
+</head>
+<body>
+
+<!-- Ekran powitalny (koperta) -->
+<div id="envelope">
+  <div class="seal">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.6 2 5 5.6 5c2 0 3.4 1 4.4 2.4C11 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.8 19.5 16.4 12 21 12 21z" stroke="#FAF6EF" stroke-width="1"/></svg>
+  </div>
+  <div class="hint">Kliknij, aby otworzyć</div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="monogram">
+    <svg viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="56"/>
+      <text id="monogramText" x="60" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="40" fill="none" stroke="currentColor" stroke-width="1">A&amp;J</text>
+    </svg>
+  </div>
+  <p class="eyebrow">Zapraszamy z całego serca</p>
+  <h1 id="heroNames">Anna <span class="amp">&amp;</span> Jakub</h1>
+  <p class="tagline">Po latach wspólnej drogi przyszedł czas, by powiedzieć sobie „tak”. Będzie nam niezmiernie miło, jeśli będziecie tego dnia przy nas.</p>
+  <div class="datebar">
+    <span id="heroDateLong">12 września 2026</span>
+    <span class="dot"></span>
+    <span id="heroLocationShort">Kraków</span>
+  </div>
+  <div class="scroll-cue"><span class="stem"></span>Przewiń</div>
+</header>
+
+<!-- LICZNIK -->
+<section id="odliczanie">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Zostało</p>
+      <h2>Do naszego wielkiego dnia</h2>
+    </div>
+    <div class="countdown">
+      <div class="unit"><div class="num" id="cd-days">00</div><div class="lbl">dni</div></div>
+      <div class="unit"><div class="num" id="cd-hours">00</div><div class="lbl">godzin</div></div>
+      <div class="unit"><div class="num" id="cd-mins">00</div><div class="lbl">minut</div></div>
+      <div class="unit"><div class="num" id="cd-secs">00</div><div class="lbl">sekund</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
+</div>
+
+<!-- SZCZEGÓŁY -->
+<section id="szczegoly">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Kiedy i gdzie</p>
+      <h2>Szczegóły uroczystości</h2>
+    </div>
+    <div class="details-grid">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2 L20 7 V21 H4 V7 Z"/><path d="M9 21 V13 H15 V21"/></svg></div>
+        <h3 id="ceremonyName">Ceremonia</h3>
+        <p id="ceremonyAddress">Adres kościoła / USC — uzupełnij w konfiguracji</p>
+        <a class="map-link" id="ceremonyMapLink" href="#" target="_blank" rel="noopener">Zobacz na mapie</a>
+        <div class="time" id="ceremonyTime">13:00</div>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21 V10 L12 3 L20 10 V21 Z"/><circle cx="12" cy="14" r="2.4"/></svg></div>
+        <h3 id="receptionName">Przyjęcie</h3>
+        <p id="receptionAddress">Adres sali weselnej — uzupełnij w konfiguracji</p>
+        <a class="map-link" id="receptionMapLink" href="#" target="_blank" rel="noopener">Zobacz na mapie</a>
+        <div class="time" id="receptionTime">16:00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
+</div>
+
+<!-- HARMONOGRAM -->
+<section id="harmonogram">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Plan dnia</p>
+      <h2>Harmonogram</h2>
+    </div>
+    <div class="timeline" id="timeline"><!-- generowane przez JS z CONFIG.schedule --></div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
+</div>
+
+<!-- RSVP -->
+<section id="rsvp">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Potwierdzenie obecności</p>
+      <h2>Będziecie z nami?</h2>
+    </div>
+    <div class="rsvp-box">
+      <p>Prosimy o potwierdzenie przybycia — wystarczy kliknąć przycisk poniżej, a otworzy się gotowa wiadomość e-mail.</p>
+      <a class="btn" id="rsvpButton" href="#">Potwierdzam obecność</a>
+      <p class="rsvp-deadline" id="rsvpDeadline">Prosimy o odpowiedź do 1 sierpnia 2026</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
+</div>
+
+<!-- DODATKOWE INFORMACJE -->
+<section id="informacje">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Dobrze wiedzieć</p>
+      <h2>Informacje dodatkowe</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-item">
+        <p class="eyebrow">Dress code</p>
+        <p id="dressCode">Strój wizytowy, elegancki. Prosimy unikać koloru białego i pasteli.</p>
+      </div>
+      <div class="info-item">
+        <p class="eyebrow">Nocleg</p>
+        <p id="accommodation">Kilka hoteli w pobliżu — listę wyślemy w odrębnej wiadomości.</p>
+      </div>
+      <div class="info-item">
+        <p class="eyebrow">Dojazd</p>
+        <p id="transport">Parking dostępny na miejscu, zapewniamy również transport spod hotelu.</p>
+      </div>
+      <div class="info-item">
+        <p class="eyebrow">Prezenty</p>
+        <p id="gifts">Waszą obecność uważamy za najpiękniejszy prezent — a jeśli chcielibyście dodać coś od siebie, koperta będzie mile widziana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="monogram-sm">
+    <svg viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="56"/>
+      <text x="60" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="34" fill="none" stroke="currentColor" stroke-width="1">A&amp;J</text>
+    </svg>
+  </div>
+  <h3 id="footerNames">Anna &amp; Jakub</h3>
+  <p class="sig">Do zobaczenia na naszym ślubie 💛</p>
+</footer>
+
+<script>
+/* =========================================================
+   ██  KONFIGURACJA TREŚCI — EDYTUJ TYLKO TĘ SEKCJĘ
+   To jedyne miejsce, w którym musisz wpisać swoje dane.
+   Reszta strony wypełni się i przeliczy automatycznie.
+   ========================================================= */
+const CONFIG = {
+  // Imiona pary (w kolejności, w jakiej mają się wyświetlać)
+  brideFirst: "Anna",
+  groomFirst: "Jakub",
+  initials: "A&J",          // inicjały do monogramu
+
+  // Data i godzina ślubu — format: "RRRR-MM-DDTGG:MM:00"
+  weddingDateISO: "2026-09-12T13:00:00",
+  heroDateLong: "12 września 2026",     // data w wersji opisowej (nagłówek)
+  heroLocationShort: "Kraków",          // krótka nazwa miejscowości w nagłówku
+
+  ceremony: {
+    name: "Ceremonia",
+    address: "np. Kościół pw. św. Anny, ul. Przykładowa 1, Kraków",
+    time: "13:00",
+    mapUrl: "https://maps.google.com/?q=Ko%C5%9Bci%C3%B3%C5%82+%C5%9Bw.+Anny+Krak%C3%B3w"
+  },
+
+  reception: {
+    name: "Przyjęcie",
+    address: "np. Sala Weselna Pod Lipami, ul. Weselna 10, Kraków",
+    time: "16:00",
+    mapUrl: "https://maps.google.com/?q=Sala+Weselna+Pod+Lipami+Krak%C3%B3w"
+  },
+
+  // Harmonogram dnia — dodawaj / usuwaj wiersze wedle potrzeby
+  schedule: [
+    { time: "13:00", label: "Ceremonia zaślubin" },
+    { time: "14:30", label: "Sesja zdjęciowa i toast powitalny" },
+    { time: "16:00", label: "Przyjęcie weselne — obiad" },
+    { time: "19:00", label: "Pierwszy taniec i tort" },
+    { time: "20:00", label: "Zabawa taneczna do białego rana" }
+  ],
+
+  // RSVP — adres e-mail, na który przyjdzie potwierdzenie
+  rsvpEmail: "wasze.imiona@example.com",
+  rsvpDeadlineText: "Prosimy o odpowiedź do 1 sierpnia 2026",
+
+  // Informacje dodatkowe
+  dressCode: "Strój wizytowy, elegancki. Prosimy unikać koloru białego i pasteli.",
+  accommodation: "Kilka hoteli w pobliżu — listę wyślemy w odrębnej wiadomości.",
+  transport: "Parking dostępny na miejscu, zapewniamy również transport spod hotelu.",
+  gifts: "Waszą obecność uważamy za najpiękniejszy prezent — a jeśli chcielibyście dodać coś od siebie, koperta będzie mile widziana."
+};
+/* ========================= KONIEC KONFIGURACJI ========================= */
+
+
+// ---- Wypełnianie treści na podstawie CONFIG ----
+document.getElementById('monogramText').textContent = CONFIG.initials;
+document.getElementById('heroNames').innerHTML =
+  `${CONFIG.brideFirst} <span class="amp">&amp;</span> ${CONFIG.groomFirst}`;
+document.getElementById('heroDateLong').textContent = CONFIG.heroDateLong;
+document.getElementById('heroLocationShort').textContent = CONFIG.heroLocationShort;
+document.getElementById('footerNames').innerHTML = `${CONFIG.brideFirst} &amp; ${CONFIG.groomFirst}`;
+
+document.getElementById('ceremonyName').textContent = CONFIG.ceremony.name;
+document.getElementById('ceremonyAddress').textContent = CONFIG.ceremony.address;
+document.getElementById('ceremonyTime').textContent = CONFIG.ceremony.time;
+document.getElementById('ceremonyMapLink').href = CONFIG.ceremony.mapUrl;
+
+document.getElementById('receptionName').textContent = CONFIG.reception.name;
+document.getElementById('receptionAddress').textContent = CONFIG.reception.address;
+document.getElementById('receptionTime').textContent = CONFIG.reception.time;
+document.getElementById('receptionMapLink').href = CONFIG.reception.mapUrl;
+
+document.getElementById('dressCode').textContent = CONFIG.dressCode;
+document.getElementById('accommodation').textContent = CONFIG.accommodation;
+document.getElementById('transport').textContent = CONFIG.transport;
+document.getElementById('gifts').textContent = CONFIG.gifts;
+
+document.getElementById('rsvpDeadline').textContent = CONFIG.rsvpDeadlineText;
+document.getElementById('rsvpButton').href =
+  `mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent('Potwierdzenie obecności — ' + CONFIG.brideFirst + ' i ' + CONFIG.groomFirst)}&body=${encodeURIComponent('Cześć! Z przyjemnością potwierdzam swoją obecność na Waszym ślubie.\n\nImię i nazwisko:\nLiczba osób:\nUwagi (dieta itp.):')}`;
+
+// ---- Harmonogram ----
+const timelineEl = document.getElementById('timeline');
+timelineEl.innerHTML = CONFIG.schedule.map(item => `
+  <div class="t-item">
+    <div class="t-time">${item.time}</div>
+    <div class="t-label">${item.label}</div>
+  </div>
+`).join('');
+
+// ---- Licznik odliczający ----
+const target = new Date(CONFIG.weddingDateISO).getTime();
+function updateCountdown(){
+  const now = Date.now();
+  const diff = target - now;
+  const els = {
+    d: document.getElementById('cd-days'),
+    h: document.getElementById('cd-hours'),
+    m: document.getElementById('cd-mins'),
+    s: document.getElementById('cd-secs')
+  };
+  if(diff <= 0){
+    els.d.textContent = '00'; els.h.textContent = '00';
+    els.m.textContent = '00'; els.s.textContent = '00';
+    return;
+  }
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+  els.d.textContent = String(days).padStart(2,'0');
+  els.h.textContent = String(hours).padStart(2,'0');
+  els.m.textContent = String(mins).padStart(2,'0');
+  els.s.textContent = String(secs).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ---- Ekran koperty ----
+const envelope = document.getElementById('envelope');
+function openEnvelope(){
+  envelope.classList.add('opened');
+  window.removeEventListener('scroll', openOnScroll);
+}
+function openOnScroll(){ if(window.scrollY > 10) openEnvelope(); }
+envelope.addEventListener('click', openEnvelope);
+window.addEventListener('scroll', openOnScroll);
+setTimeout(openEnvelope, 4500); // otwiera się automatycznie, jeśli gość nic nie klika
+</script>
+</body>
+</html>
