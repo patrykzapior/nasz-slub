@@ -439,16 +439,6 @@
   <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
 </div>
 
-<!-- HARMONOGRAM -->
-<section id="harmonogram">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="eyebrow">Plan dnia</p>
-      <h2>Harmonogram</h2>
-    </div>
-    <div class="timeline" id="timeline"><!-- generowane przez JS z CONFIG.schedule --></div>
-  </div>
-</section>
 
 <div class="divider">
   <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
@@ -543,25 +533,12 @@ const CONFIG = {
     mapUrl: "https://maps.app.goo.gl/PZecV2Yx4eTMg9R26"
   },
 
-  // Harmonogram dnia — dodawaj / usuwaj wiersze wedle potrzeby
-  schedule: [
-    { time: "15:00", label: "Ceremonia zaślubin" },
-    { time: "15:45", label: "Sesja zdjęciowa i toast powitalny" },
-    { time: "16:15", label: "Przyjęcie weselne — obiad" },
-    { time: "19:00", label: "Pierwszy taniec i tort" },
-    { time: "20:00", label: "Zabawa taneczna do białego rana" }
-  ],
 
   // RSVP — adres e-mail, na który przyjdzie potwierdzenie
   rsvpEmail: "zapior.patryk@gmail.com",
   rsvpDeadlineText: "Prosimy o odpowiedź do 1 sierpnia 2026",
 
-  // Informacje dodatkowe
-  dressCode: "Strój wizytowy, elegancki. Prosimy unikać koloru białego i pasteli.",
-  accommodation: "Kilka hoteli w pobliżu — listę wyślemy w odrębnej wiadomości.",
-  transport: "Parking dostępny na miejscu, zapewniamy również transport spod hotelu.",
-  gifts: "Waszą obecność uważamy za najpiękniejszy prezent — a jeśli chcielibyście dodać coś od siebie, koperta będzie mile widziana."
-};
+ };
 
 /* ========================= KONIEC KONFIGURACJI ========================= */
 
@@ -593,14 +570,6 @@ document.getElementById('rsvpDeadline').textContent = CONFIG.rsvpDeadlineText;
 document.getElementById('rsvpButton').href =
   `mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent('Potwierdzenie obecności — ' + CONFIG.brideFirst + ' i ' + CONFIG.groomFirst)}&body=${encodeURIComponent('Cześć! Z przyjemnością potwierdzam swoją obecność na Waszym ślubie.\n\nImię i nazwisko:\nLiczba osób:\nUwagi (dieta itp.):')}`;
 
-// ---- Harmonogram ----
-const timelineEl = document.getElementById('timeline');
-timelineEl.innerHTML = CONFIG.schedule.map(item => `
-  <div class="t-item">
-    <div class="t-time">${item.time}</div>
-    <div class="t-label">${item.label}</div>
-  </div>
-`).join('');
 
 // ---- Licznik odliczający ----
 const target = new Date(CONFIG.weddingDateISO).getTime();
