@@ -11,11 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  /* =========================================================
-     ██  KONFIGURACJA WIZUALNA — kolory i typografia
-     Wszystkie treści (imiona, daty, adresy) edytujesz w CONFIG
-     na dole pliku, w znaczniku <script>. Nie musisz ruszać CSS.
-     ========================================================= */
   :root{
     --ivory:   #FAF6EF;
     --ivory-2: #F2ECE0;
@@ -420,14 +415,14 @@
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2 L20 7 V21 H4 V7 Z"/><path d="M9 21 V13 H15 V21"/></svg></div>
         <h3 id="ceremonyName">Ceremonia</h3>
-        <p id="ceremonyAddress">Adres kościoła / USC — uzupełnij w konfiguracji</p>
+        <p id="ceremonyAddress">Adres kościoła</p>
         <a class="map-link" id="ceremonyMapLink" href="#" target="_blank" rel="noopener">Zobacz na mapie</a>
-        <div class="time" id="ceremonyTime">13:00</div>
+        <div class="time" id="ceremonyTime">15:00</div>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21 V10 L12 3 L20 10 V21 Z"/><circle cx="12" cy="14" r="2.4"/></svg></div>
         <h3 id="receptionName">Przyjęcie</h3>
-        <p id="receptionAddress">Adres sali weselnej — uzupełnij w konfiguracji</p>
+        <p id="receptionAddress">Adres</p>
         <a class="map-link" id="receptionMapLink" href="#" target="_blank" rel="noopener">Zobacz na mapie</a>
         <div class="time" id="receptionTime">16:00</div>
       </div>
@@ -454,7 +449,7 @@
     <div class="rsvp-box">
       <p>Prosimy o potwierdzenie przybycia — wystarczy kliknąć przycisk poniżej, a otworzy się gotowa wiadomość e-mail.</p>
       <a class="btn" id="rsvpButton" href="#">Potwierdzam obecność</a>
-      <p class="rsvp-deadline" id="rsvpDeadline">Prosimy o odpowiedź do 1 sierpnia 2026</p>
+      <p class="rsvp-deadline" id="rsvpDeadline">Prosimy o odpowiedź do 1 września 2026</p>
     </div>
   </div>
 </section>
@@ -463,6 +458,30 @@
   <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
 </div>
 
+<section id="informacje">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Dobrze wiedzieć</p>
+      <h2>Informacje dodatkowe</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-item">
+      </div>
+      <div class="info-item">
+      </div>
+      <div class="info-item">
+        <p class="eyebrow">Dojazd</p>
+        <p id="transport">Parking dostępny na miejscu.</p>
+      </div>
+      <div class="info-item">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg viewBox="0 0 140 20"><path d="M0 10 Q35 -6 70 10 Q105 26 140 10" stroke-width="1"/></svg>
+</div>
 
 <footer>
   <div class="monogram-sm">
@@ -476,13 +495,8 @@
 </footer>
 
 <script>
-/* =========================================================
-   ██  KONFIGURACJA TREŚCI — EDYTUJ TYLKO TĘ SEKCJĘ
-   To jedyne miejsce, w którym musisz wpisać swoje dane.
-   Reszta strony wypełni się i przeliczy automatycznie.
-   ========================================================= */
+
 const CONFIG = {
-  // Imiona pary (w kolejności, w jakiej mają się wyświetlać)
   brideFirst: "Klaudia",
   groomFirst: "Patryk",
   initials: "K&P",          // inicjały do monogramu
@@ -511,37 +525,48 @@ const CONFIG = {
   rsvpEmail: "zapior.patryk@gmail.com",
   rsvpDeadlineText: "Prosimy o odpowiedź do 1 sierpnia 2026",
 
+  // Informacje dodatkowe
+  transport: "Parking dostępny na miejscu.",
  };
 
 /* ========================= KONIEC KONFIGURACJI ========================= */
 
 
-// ---- Wypełnianie treści na podstawie CONFIG ----
-document.getElementById('monogramText').textContent = CONFIG.initials;
-document.getElementById('heroNames').innerHTML =
-  `${CONFIG.brideFirst} <span class="amp">&amp;</span> ${CONFIG.groomFirst}`;
-document.getElementById('heroDateLong').textContent = CONFIG.heroDateLong;
-document.getElementById('heroLocationShort').textContent = CONFIG.heroLocationShort;
-document.getElementById('footerNames').innerHTML = `${CONFIG.brideFirst} &amp; ${CONFIG.groomFirst}`;
 
-document.getElementById('ceremonyName').textContent = CONFIG.ceremony.name;
-document.getElementById('ceremonyAddress').textContent = CONFIG.ceremony.address;
-document.getElementById('ceremonyTime').textContent = CONFIG.ceremony.time;
-document.getElementById('ceremonyMapLink').href = CONFIG.ceremony.mapUrl;
+function setText(id, value){
+  const el = document.getElementById(id);
+  if(el) el.textContent = value;
+}
+function setHTML(id, value){
+  const el = document.getElementById(id);
+  if(el) el.innerHTML = value;
+}
+function setHref(id, value){
+  const el = document.getElementById(id);
+  if(el) el.href = value;
+}
 
-document.getElementById('receptionName').textContent = CONFIG.reception.name;
-document.getElementById('receptionAddress').textContent = CONFIG.reception.address;
-document.getElementById('receptionTime').textContent = CONFIG.reception.time;
-document.getElementById('receptionMapLink').href = CONFIG.reception.mapUrl;
+setText('monogramText', CONFIG.initials);
+setHTML('heroNames', `${CONFIG.brideFirst} <span class="amp">&amp;</span> ${CONFIG.groomFirst}`);
+setText('heroDateLong', CONFIG.heroDateLong);
+setText('heroLocationShort', CONFIG.heroLocationShort);
+setHTML('footerNames', `${CONFIG.brideFirst} &amp; ${CONFIG.groomFirst}`);
 
-document.getElementById('dressCode').textContent = CONFIG.dressCode;
-document.getElementById('accommodation').textContent = CONFIG.accommodation;
-document.getElementById('transport').textContent = CONFIG.transport;
-document.getElementById('gifts').textContent = CONFIG.gifts;
+setText('ceremonyName', CONFIG.ceremony.name);
+setText('ceremonyAddress', CONFIG.ceremony.address);
+setText('ceremonyTime', CONFIG.ceremony.time);
+setHref('ceremonyMapLink', CONFIG.ceremony.mapUrl);
 
-document.getElementById('rsvpDeadline').textContent = CONFIG.rsvpDeadlineText;
-document.getElementById('rsvpButton').href =
-  `mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent('Potwierdzenie obecności — ' + CONFIG.brideFirst + ' i ' + CONFIG.groomFirst)}&body=${encodeURIComponent('Cześć! Z przyjemnością potwierdzam swoją obecność na Waszym ślubie.\n\nImię i nazwisko:\nLiczba osób:\nUwagi (dieta itp.):')}`;
+setText('receptionName', CONFIG.reception.name);
+setText('receptionAddress', CONFIG.reception.address);
+setText('receptionTime', CONFIG.reception.time);
+setHref('receptionMapLink', CONFIG.reception.mapUrl);
+
+setText('transport', CONFIG.transport);
+
+setText('rsvpDeadline', CONFIG.rsvpDeadlineText);
+setHref('rsvpButton',
+  `mailto:${CONFIG.rsvpEmail}?subject=${encodeURIComponent('Potwierdzenie obecności — ' + CONFIG.brideFirst + ' i ' + CONFIG.groomFirst)}&body=${encodeURIComponent('Cześć! Z przyjemnością potwierdzam swoją obecność na Waszym ślubie.\n\nImię i nazwisko:\nUwagi (dieta itp.):')}`);
 
 
 // ---- Licznik odliczający ----
