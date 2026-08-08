@@ -525,7 +525,7 @@ const CONFIG = {
   initials: "K&P",          // inicjały do monogramu
 
   // Data i godzina ślubu — format: "RRRR-MM-DDTGG:MM:00"
-  weddingDateISO: "2026-09-12T13:00:00",
+  weddingDateISO: "2026-09-12T15:00:00",
   heroDateLong: "12 września 2026",     // data w wersji opisowej (nagłówek)
   heroLocationShort: "Kraków",          // krótka nazwa miejscowości w nagłówku
 
@@ -543,9 +543,25 @@ const CONFIG = {
     mapUrl: "https://maps.app.goo.gl/PZecV2Yx4eTMg9R26"
   },
 
+  // Harmonogram dnia — dodawaj / usuwaj wiersze wedle potrzeby
+  schedule: [
+    { time: "15:00", label: "Ceremonia zaślubin" },
+    { time: "15:45", label: "Sesja zdjęciowa i toast powitalny" },
+    { time: "16:15", label: "Przyjęcie weselne — obiad" },
+    { time: "19:00", label: "Pierwszy taniec i tort" },
+    { time: "20:00", label: "Zabawa taneczna do białego rana" }
+  ],
+
   // RSVP — adres e-mail, na który przyjdzie potwierdzenie
   rsvpEmail: "zapior.patryk@gmail.com",
+  rsvpDeadlineText: "Prosimy o odpowiedź do 1 sierpnia 2026",
 
+  // Informacje dodatkowe
+  dressCode: "Strój wizytowy, elegancki. Prosimy unikać koloru białego i pasteli.",
+  accommodation: "Kilka hoteli w pobliżu — listę wyślemy w odrębnej wiadomości.",
+  transport: "Parking dostępny na miejscu, zapewniamy również transport spod hotelu.",
+  gifts: "Waszą obecność uważamy za najpiękniejszy prezent — a jeśli chcielibyście dodać coś od siebie, koperta będzie mile widziana."
+};
 
 /* ========================= KONIEC KONFIGURACJI ========================= */
 
