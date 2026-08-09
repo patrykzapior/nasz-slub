@@ -370,7 +370,7 @@
   <div class="monogram">
     <svg viewBox="0 0 120 120">
       <circle cx="60" cy="60" r="56"/>
-      <text id="monogramText" x="60" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="40" fill="none" stroke="currentColor" stroke-width="1">K&amp;P</text>
+      <text id="monogramText" x="60" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="40" fill="none" stroke="currentColor" stroke-width="1">A&amp;J</text>
     </svg>
   </div>
   <p class="eyebrow">Zapraszamy z całego serca</p>
@@ -461,18 +461,8 @@
 <section id="informacje">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">Dobrze wiedzieć</p>
-      <h2>Informacje dodatkowe</h2>
     </div>
     <div class="info-grid">
-      <div class="info-item">
-      </div>
-      <div class="info-item">
-      </div>
-      <div class="info-item">
-        <p class="eyebrow">Dojazd</p>
-        <p id="transport">Parking dostępny na miejscu.</p>
-      </div>
       <div class="info-item">
       </div>
     </div>
@@ -487,7 +477,7 @@
   <div class="monogram-sm">
     <svg viewBox="0 0 120 120">
       <circle cx="60" cy="60" r="56"/>
-      <text x="60" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="34" fill="none" stroke="currentColor" stroke-width="1">K&amp;P</text>
+      <text x="60" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="34" fill="none" stroke="currentColor" stroke-width="1">A&amp;J</text>
     </svg>
   </div>
   <h3 id="footerNames">Klaudia &amp; Patryk</h3>
@@ -523,10 +513,8 @@ const CONFIG = {
 
   // RSVP — adres e-mail, na który przyjdzie potwierdzenie
   rsvpEmail: "zapior.patryk@gmail.com",
-  rsvpDeadlineText: "Prosimy o odpowiedź do 1 sierpnia 2026",
+  rsvpDeadlineText: "Prosimy o odpowiedź do 1 września 2026",
 
-  // Informacje dodatkowe
-  transport: "Parking dostępny na miejscu.",
  };
 
 /* ========================= KONIEC KONFIGURACJI ========================= */
@@ -561,8 +549,6 @@ setText('receptionName', CONFIG.reception.name);
 setText('receptionAddress', CONFIG.reception.address);
 setText('receptionTime', CONFIG.reception.time);
 setHref('receptionMapLink', CONFIG.reception.mapUrl);
-
-setText('transport', CONFIG.transport);
 
 setText('rsvpDeadline', CONFIG.rsvpDeadlineText);
 setHref('rsvpButton',
